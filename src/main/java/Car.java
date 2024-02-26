@@ -14,21 +14,21 @@ public class Car {
     public int getFuelCapacity() {
         return fuelCapacity;
     }
-    public void refillFuel(float fuelInLitres){
+    public void refillFuel(float fuelInLitres) throws Exception{
 
         this.availableFuel +=  fuelInLitres;
         if(availableFuel>fuelCapacity) {
-         throw new  IllegalArgumentException("Cannot Refill More Than Capacity");
+         throw new  FuelCapacityExceededException("Cannot Refill More Than Capacity");
         }
         distanceCarCanTravel = availableFuel*avg;
     }
-    public void drive(float distanceInKms){
+    public void drive(float distanceInKms) throws Exception{
         distanceCovered=distanceInKms;
         float neededFuel = distanceInKms/avg;
         if(availableFuel>neededFuel){
             availableFuel-=neededFuel;
         }else {
-            throw new IllegalArgumentException("Enough Fuel Not Available");
+            throw new InsufficientFuelException("Enough Fuel Not Available");
         }
         distanceCarCanTravel= availableFuel*avg;
     }

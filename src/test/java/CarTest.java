@@ -1,4 +1,6 @@
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.common.input.EOFException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CarTest {
@@ -15,7 +17,7 @@ public class CarTest {
 
     }
     @Test
-    public void thisTestShouldTestRefillFuel(){
+    public void thisTestShouldTestRefillFuel() throws Exception {
         car.refillFuel(30);
         assertEquals(30,car.getAvailableFuel());
         assertEquals(360,car.getDistanceCarCanTravel());
@@ -24,12 +26,12 @@ public class CarTest {
     @Test
     public void thisTestShouldTestBeyondCapacityFuel(){
 
-        assertThrows(IllegalArgumentException.class,()->{
+        assertThrows(FuelCapacityExceededException.class,()->{
             car.refillFuel(51);
         });
     }
     @Test
-    public void testForDistanceCoveredAndRemainingFuel(){
+    public void testForDistanceCoveredAndRemainingFuel() throws Exception {
         car.refillFuel(40);
 
         car.drive(100);
@@ -39,11 +41,11 @@ public class CarTest {
         assertEquals((40f-100f/12f)*12,car.getDistanceCarCanTravel());
     }
     @Test
-    public void testForDistanceMoreAvailableFuel()
+    public void testForDistanceMoreAvailableFuel() throws Exception
     {
         car.refillFuel(1);
 
-        assertThrows(IllegalArgumentException.class,()->{
+        assertThrows(InsufficientFuelException.class,()->{
             car.drive(100);
         });
     }
